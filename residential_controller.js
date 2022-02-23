@@ -143,36 +143,5 @@ class Door {
 
 }
 
-const columnStatus = {
-    ACTIVE: 'active',
-    INACTIVE: 'inactive'
-};
-
-/* ******* ELEVATOR STATUS ******* */
-const elevatorStatus = {
-    IDLE: 'idle',
-    UP: 'up',
-    DOWN: 'down'
-};
-
-/* ******* BUTTON DIRECTION ******* */
-const buttonDirection = {
-    UP: 'up',
-    DOWN: 'down'
-};
-
-/* ******* BUTTONS STATUS ******* */
-const buttonStatus = {
-    ON: 'on',
-    OFF: 'off'
-};
-
-
-/* ******* DOORS STATUS ******* */
-const doorStatus = {
-    OPENED: 'opened',
-    CLOSED: 'closed'
-};
-let newColumn = new Column(1, 10, 2) 
 
 module.exports = { Column, Elevator, CallButton, FloorRequestButton, Door }
