@@ -10,16 +10,29 @@ class Column {
         this.createCallButtons(_amountOfFloors)
     }
 
+    
+
+
+    requestlevator(){
+
+    }
+
     createElevators(amountOfElevators) {
+        for (let i = 1; i <= this._amountOfElevators; i++) {
+            this.elevatorList.push(new Elevator(i, this._amountOfFloors));
+        }
 
     }
-    
+
     createCallButtons(amountOfFloors) {
+        for (let i = 1; i <= this._amountOfFloors; i++) {
+            this.callButtonList.push(new CallButton(i, i, 'up')); 
 
+        }
     }
     
 
-    requestELevator(currentFloor, direction) {
+    requestElevator(currentFloor, direction) {
 
     }
 
@@ -37,12 +50,12 @@ class Elevator {
     constructor(_id, _amountOfFloors) {
         this.id = _id;
         this.amountOfFloors = _amountOfFloors;
-        this.status;
+        this.status = 'idle';
         this.direction;
         this.currentFloor = 1;
-        //Door goes here'
-        this.floorRequestButtonList = [];
+        this.RequestButtonList = [];
         this.floorRequestList = [];
+        this.createRequestButtons(_amountOfFloors)
     }
 
 
@@ -80,8 +93,16 @@ class Elevator {
 
     }
     status = 'idle';
-}
 
+    createRequestButtons(_amountOfFloors) {
+        for (let i = 1; i <= this._amountOfFloors; i++) {
+            this.RequestButtonList.push(new CallButton(i, floor));
+
+
+        }
+    }
+
+}  
 class CallButton {
     constructor(_id, _floor, _direction) {
         this._id = _id;
@@ -152,6 +173,6 @@ const doorStatus = {
     OPENED: 'opened',
     CLOSED: 'closed'
 };
-
+let newColumn = new Column(1, 10, 2) 
 
 module.exports = { Column, Elevator, CallButton, FloorRequestButton, Door }
