@@ -1,16 +1,24 @@
 const { curry } = require("prelude-ls");
 
+
+let elevatorId = 1;
+let callButtonId = 1;
+let floorRequestButtonId = 1;
+let doorId = 1
+
 class Column {
     constructor(_id, _amountOfFloors, _amountOfElevators) {
+        
         this.elevatorList = [];
         this.callButtonList = [];
         this.ID = _id;
         this.status = "online"
         this.createElevators(_amountOfElevators)
         this.createCallButtons(_amountOfFloors)
-    }
+        
+    }  
 
-    
+     
 
 
     requestlevator(){
@@ -18,15 +26,28 @@ class Column {
     }
 
     createElevators(amountOfElevators) {
-        for (let i = 1; i <= this._amountOfElevators; i++) {
+        
+        for (let i = 1; i <= amountOfElevators; i++) {
             this.elevatorList.push(new Elevator(i, this._amountOfFloors));
         }
 
     }
 
     createCallButtons(amountOfFloors) {
-        for (let i = 1; i <= this._amountOfFloors; i++) {
-            this.callButtonList.push(new CallButton(i, i, 'up')); 
+        let buttonFloor = 1;
+        let CallButtonId = 1;
+
+        for (let i = 1; i <= amountOfFloors ; i++) {
+            if (buttonFloor < amountOfFloors){ 
+            this.callButtonList.push(new CallButton(i, i, 'up'));
+            CallButtonId++; 
+              }
+              if (buttonFloor > 1 ){
+                this.callButtonList.push(new CallButton(i, i, 'down'));
+                CallButtonId++;
+
+              } 
+              buttonFloor++; 
 
         }
     }
@@ -48,82 +69,88 @@ class Column {
 
 class Elevator {
     constructor(_id, _amountOfFloors) {
-        this.id = _id;
+        this.ID = _id;
         this.amountOfFloors = _amountOfFloors;
         this.status = 'idle';
-        this.direction;
+        this.direction = null;
         this.currentFloor = 1;
-        this.RequestButtonList = [];
+        this.floorRequestButtonList = [];
         this.floorRequestList = [];
-        this.createRequestButtons(_amountOfFloors)
+        this.createFloorRequestButtons(_amountOfFloors)
+        this.door = new Door(doorId++);
+        
+        
+    }
+    
+
+    requestFloor(requestedFloor, direction) {
+
     }
 
-
-    requestFloor(direction, floorRequestList, _id) {
-
-    }
-    move(requestedFloor, ) {
-        while (floorRequestList > 0) {
-            for (var i = 0; i < floorRequestList.length;) {
-                if (currentFloor < floorRequestList[0]) {
-                    direction = 'up';
-                    closeDoors();
+    move() {
+        while (this.floorRequestList > 0) {
+            for (var i = 0; i < this.floorRequestList.length;) {
+                if (this.currentFloor < this.floorRequestList[0]) {
+                    this.direction = 'up';
+                    this.door.closeDoors();
                 }
                 //status = 'moving';
-                while (currentFloor < floorRequestList[0]) {
-                    currentFloor++
+                while (this.currentFloor < this.floorRequestList[0]) {
+                    this.currentFloor++
                 }
-                openDoors();
-                if (currentFloor > floorRequestList[0]) {
-                    direction = 'down';
-                    closeDoors();
+                this.door.openDoors();
+                if (this.currentFloor > this.floorRequestList[0]) {
+                    this.direction = 'down';
+                    this.door.closeDoors();
                 }
                 //status - 'moving';
 
-                while (currentFloor > floorRequestList[0]) {
-                    currentFloor--
+                while (this.currentFloor > this.floorRequestList[0]) {
+                    this.currentFloor--
                 }
 
-                openDoors();
+                this.door.openDoors();
                 //status = 'stopped';
-                closeDoors();
+                this.door.closeDoors();
             }
-            floorRequestList.shift();
+
+            this.floorRequestList.shift();
         }
 
     }
     status = 'idle';
 
-    createRequestButtons(_amountOfFloors) {
-        for (let i = 1; i <= this._amountOfFloors; i++) {
-            this.RequestButtonList.push(new CallButton(i, floor));
-
-
+    createFloorRequestButtons(amountOfFloors) {
+        for (let i = 1; i <= amountOfFloors; i++) {
+            this.floorRequestButtonList.push(new FloorRequestButton(callButtonId++, i)); 
         }
     }
 
 }  
 class CallButton {
     constructor(_id, _floor, _direction) {
-        this._id = _id;
-        this._floor = _floor;
-        this._direction = _direction;
-
+        this.ID = _id;
+        this.floor = _floor;
+        this.direction = _direction;
+        
     }
+    floor = 1;
+    direction = "up";
 }
 
 class FloorRequestButton {
     constructor(_id, _floor) {
-        this._id = _id;
-        this._floor = _floor;
+        this.ID = _id;
+        this.floor = _floor;
         this.status = 'off';
-    }
+    }   floor = 1;
 }
 
 class Door {
     constructor(_id) {
-        this._id = _id;
+        this.ID = _id;
         this.status = "idle";
+              
 
 
     }
