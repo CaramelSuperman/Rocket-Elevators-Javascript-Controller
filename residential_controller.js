@@ -1,3 +1,5 @@
+console.log("it works")
+
 const { curry } = require("prelude-ls");
 
 
@@ -21,33 +23,15 @@ class Column {
 
      
 
-        //  this method help us request the elevator.//
-    requestlevator(floor, direction){
-        this.elevator  = findElevator(floor, direction);
-        this.floorRequestList.push(floor);
-        Elevator.move(elevator);
-        //Elevator.operateDoors(this.elevator);
-
-        // return elevator;
-    }
+       
 
 
-        //for (let elevator of this.elevatorList){
-            //if (requestedFloor = currentFloor && elevator.status == "stopped" && requestedDirection == elevator.direction){
-                //let bestElevatorInformations = 
-
-            //} 
-
-
-
-        //}
-
-        checkIfElevatorIsBetter(scoreToCheck, newElevator, bestScore, referenceGap, bestElevator, floor){
-            let bestElevatorInformations = {
-                bestElevator: null,
-                bestScore: null,
-                referenceGap: null
-            }
+     checkIfElevatorIsBetter(scoreToCheck, newElevator, bestScore, referenceGap, bestElevator, floor){
+            // let bestElevatorInformations = {
+            //     bestElevator: null,
+            //     bestScore: null,
+            //     referenceGap: null
+            // }
             if(scoreToCheck < bestScore) {
                 bestElevatorInformations.bestScore = scoreToCheck
                 bestElevatorInformations.bestElevator = newElevator
@@ -59,22 +43,32 @@ class Column {
                     bestElevatorInformations.referenceGap = gap
                 }
             }
-            return bestElevatorInformation
+            return bestElevatorInformations;
 
         }
         
+        
+         //  this method help us request the elevator.//
+    requestElevator(floor, direction){
+        let elevator = this.findElevator(floor, direction);
+        elevator.floorRequestList.push(floor);
+        elevator.move();
+        elevator.operateDoors();
 
+        return elevator
+    }
 
     
                     //this method help us find our best elevator//
-         findElevator(requestedFloor, requestedDirection){
-            let bestElevator = null
-            let bestScore = 5
-            let referenceGap = 10000000
-            let bestElevatorInformations = null
-                        //
-                for(let i = 0; i < this.elevatorList.length; ++i) {
-                     let elevator = this.elevatorList[i]
+    findElevator(requestedFloor, requestedDirection){
+             let bestElevatorInformations = {
+                bestElevator: null,
+                bestScore: 5,
+                referenceGap: 1000}
+                        
+                
+                     this.elevatorList.forEach(elevator => {
+
                             if(requestedFloor == elevator.currentFloor && elevator.status == "stopped" && requestedDirection == elevator.direction){
                                 bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestScore, referenceGap, bestElevator, requestedFloor);
                             }else if(requestedFloor > elevator.currentFloor && elevator.direction == "up" && requestedDirection == elevator.direction){
@@ -89,14 +83,14 @@ class Column {
                             bestElevator = bestElevatorInformations.bestElevator
                             bestScore = bestElevatorInformations.bestScore
                             referenceGap = bestElevatorInformations.referenceGap
-                        }
+                        })
                         return bestElevator
                     }
 
     createElevators(amountOfElevators) {
         
         for (let i = 1; i <= amountOfElevators; i++) {
-            this.elevatorList.push(new Elevator(i, this._amountOfFloors));
+            this.elevatorList.push(new Elevator(i + 1, this._amountOfFloors));
         }
 
     }
@@ -121,9 +115,7 @@ class Column {
     }
     
                     // Here we request our elevator in the column//
-    requestElevator(currentFloor, direction) {
-
-    }
+    
 
     
 }
@@ -148,7 +140,7 @@ class Elevator {
     requestFloor(requestedFloor) {
         this.floorRequestList.push(requestedFloor);
         this.move();
-        //
+        this.operateDoors();
     }
 
 
@@ -250,5 +242,10 @@ class Door {
 
 }
 
+let column = new Column(1, 10, 1) 
+column.findElevator(1, "up")
+
+//let elevator = new Elevator(1, 20)
+//elevator.move();
 
 module.exports = { Column, Elevator, CallButton, FloorRequestButton, Door }
