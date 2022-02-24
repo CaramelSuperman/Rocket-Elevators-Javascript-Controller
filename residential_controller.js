@@ -22,71 +22,6 @@ class Column {
     }  
 
      
-
-       
-
-
-     checkIfElevatorIsBetter(scoreToCheck, newElevator, bestScore, referenceGap, bestElevator, floor){
-            // let bestElevatorInformations = {
-            //     bestElevator: null,
-            //     bestScore: null,
-            //     referenceGap: null
-            // }
-            if(scoreToCheck < bestScore) {
-                bestElevatorInformations.bestScore = scoreToCheck
-                bestElevatorInformations.bestElevator = newElevator
-                bestElevatorInformations.referenceGap = Math.abs(newElevator.currentFloor - floor)
-            } else if(bestScore == scoreToCheck) {
-                let gap = Math.abs(newElevator.currentFloor - floor)
-                if(referenceGap > gap){
-                    bestElevatorInformations.bestElevator = newElevator
-                    bestElevatorInformations.referenceGap = gap
-                }
-            }
-            return bestElevatorInformations;
-
-        }
-        
-        
-         //  this method help us request the elevator.//
-    requestElevator(floor, direction){
-        let elevator = this.findElevator(floor, direction);
-        elevator.floorRequestList.push(floor);
-        elevator.move();
-        elevator.operateDoors();
-
-        return elevator
-    }
-
-    
-                    //this method help us find our best elevator//
-    findElevator(requestedFloor, requestedDirection){
-             let bestElevatorInformations = {
-                bestElevator: null,
-                bestScore: 5,
-                referenceGap: 1000}
-                        
-                
-                     this.elevatorList.forEach(elevator => {
-
-                            if(requestedFloor == elevator.currentFloor && elevator.status == "stopped" && requestedDirection == elevator.direction){
-                                bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestScore, referenceGap, bestElevator, requestedFloor);
-                            }else if(requestedFloor > elevator.currentFloor && elevator.direction == "up" && requestedDirection == elevator.direction){
-                                bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator, bestScore, referenceGap, bestElevator, requestedFloor);
-                            }else if(requestedFloor > elevator.currentFloor && elevator.direction == "down" && requestedDirection == elevator.direction){
-                                bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator, bestScore, referenceGap, bestElevator, requestedFloor);
-                            }else if(elevator.status === "idle"){
-                                bestElevatorInformations = this.checkIfElevatorIsBetter(3, elevator, bestScore, referenceGap, bestElevator, requestedFloor);
-                            }else {
-                                bestElevatorInformations = this.checkIfElevatorIsBetter(4, elevator, bestScore, referenceGap, bestElevator, requestedFloor);
-                            }
-                            bestElevator = bestElevatorInformations.bestElevator
-                            bestScore = bestElevatorInformations.bestScore
-                            referenceGap = bestElevatorInformations.referenceGap
-                        })
-                        return bestElevator
-                    }
-
     createElevators(amountOfElevators) {
         
         for (let i = 1; i <= amountOfElevators; i++) {
@@ -113,6 +48,81 @@ class Column {
 
         }
     }
+       
+
+
+     checkIfElevatorIsBetter(scoreToCheck, newElevator, bestScore, referenceGap, bestElevator, floor){
+            let bestElevatorInformations = {
+                bestElevator: null,
+                bestScore: null,
+                referenceGap: null
+            }
+            if(scoreToCheck < bestScore) {
+                bestElevatorInformations.bestScore = scoreToCheck
+                bestElevatorInformations.bestElevator = newElevator
+                bestElevatorInformations.referenceGap = Math.abs(newElevator.currentFloor - floor)
+            } else if(bestScore == scoreToCheck) {
+                let gap = Math.abs(newElevator.currentFloor - floor)
+                if(referenceGap > gap){
+                    bestElevatorInformations.bestElevator = newElevator
+                    bestElevatorInformations.referenceGap = gap
+                }
+            }
+            return bestElevatorInformations
+
+        }
+        
+        floorRequestList = [];
+         //  this method help us request the elevator.//
+    requestElevator(floor, direction){
+        
+        let elevator = this.findElevator(floor, direction);
+        console.log(elevator)
+        elevator.floorRequestList.push(floor);
+        elevator.move();
+        elevator.operateDoors();
+
+        return elevator
+    }
+
+    
+                    //this method help us find our best elevator//
+    findElevator(requestedFloor, requestedDirection){
+             let bestElevatorInformations = {
+                bestElevator: null,
+                bestScore: 5,
+                referenceGap: 1000}
+                       
+                
+                     this.elevatorList.forEach(elevator => {
+                        
+                            
+                            if(requestedFloor == elevator.currentFloor && elevator.status == "stopped" && requestedDirection == elevator.direction){
+                                bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
+                                
+                            }else if(requestedFloor > elevator.currentFloor && elevator.direction == "up" && requestedDirection == elevator.direction){
+                                bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator,bestElevatorInformations , requestedFloor);
+
+                            }else if(requestedFloor > elevator.currentFloor && elevator.direction == "down" && requestedDirection == elevator.direction){
+                                bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator,bestElevatorInformations , requestedFloor);
+
+                            }else if(elevator.status == "idle"){
+                                bestElevatorInformations = this.checkIfElevatorIsBetter(3, elevator, bestElevatorInformations, requestedFloor);
+
+                            }else {
+                                bestElevatorInformations = this.checkIfElevatorIsBetter(4, elevator,bestElevatorInformations , requestedFloor);
+                                
+                            }
+                            // bestElevator = bestElevatorInformations.bestElevator
+                            // bestScore = bestElevatorInformations.bestScore
+                            // referenceGap = bestElevatorInformations.referenceGap
+                           
+                        })
+                        return bestElevatorInformations.bestElevator
+                        
+                    }
+
+   
     
                     // Here we request our elevator in the column//
     
