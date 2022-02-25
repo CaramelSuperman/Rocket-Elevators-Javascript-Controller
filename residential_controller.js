@@ -1,4 +1,4 @@
-let columnIdCounter = 0;
+
 let elevatorID = 1
 let floorRequestButtonID = 1
 let callButtonID = 1
