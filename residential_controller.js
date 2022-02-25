@@ -29,9 +29,8 @@ class Column {
     //***************************here we create the buttons outside the elevator/ on the floors************ */
     createCallButtons() {
         let buttonFloor = 1
-        // let direction = ‘’
+        
         for (let i = 1; i <= this.amountOfFloors; i++) {
-            // console.log(floor);
             if (buttonFloor < this.amountOfFloors) {
                 let callButton = new CallButton(callButtonID++, this.amountOfFloors, "up")
                 this.callButtonList.push(callButton)
