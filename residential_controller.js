@@ -132,14 +132,14 @@ class Elevator {
                 this.sortFloorList()
                 while (this.currentFloor < destination) {
                     this.currentFloor++
-                    this.screenDisplay = this.currentFloor
+                    
                 }
             } else if (this.currentFloor > destination) {
                 this.direction = "down"
                 this.sortFloorList()
                 while (this.currentFloor > destination) {
                     this.currentFloor--
-                    this.screenDisplay = this.currentFloor
+                    
                 }
             }
             this.status = "stopped"
