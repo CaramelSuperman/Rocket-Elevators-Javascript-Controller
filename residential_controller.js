@@ -22,7 +22,7 @@ class Column {
         for (let i = 0; i < this.amountOfElevators; i++) {
             let elevator = new Elevator(elevatorID++, this.amountOfFloors)
             this.elevatorList.push(elevator)
-            // console.log(elevatorId, this.elevatorList);
+            
         }
     }
 
@@ -40,7 +40,7 @@ class Column {
                 this.callButtonList.push(callButton)
             }
             buttonFloor++
-            // console.log(this.callButton, this.callButtonList);
+            
         }
     }
     
@@ -144,7 +144,7 @@ class Elevator {
                 }
             }
             this.status = "stopped"
-            //this.floorRequestList.splice(0, 1)
+            
         }
         this.status = "idle"
     }
