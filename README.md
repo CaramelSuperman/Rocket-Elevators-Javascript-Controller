@@ -26,7 +26,7 @@ by you the see the program in execution(column =  new Column(your inputs).)
 ## Example
 
 if you initiate a new column like
-columnA = Column(id, number of floors, number of elevators )
+columnA =  new Column(id, number of floors, number of elevators )
 the program will create a column with the number of floors 
 and number of elevators.
 
