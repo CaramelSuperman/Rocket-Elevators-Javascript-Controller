@@ -1,17 +1,39 @@
-# Rocket-Elevators-Javascript-Controller
-This is the template to use for the javascript residential controller. You will find the classes that should be used along with some methods described in the requirements.
-The necessary files to run some tests are also present. With Node JS and NPM installed, first run:
+# Description
 
-`npm install`
 
-and then, to run the tests:
+this program creates an column of elevators that can move to the desire floor
+ by chosing the most apropriate elevator for each situation
+the user just need to push the call button and an elevator will 
+come to the user and then transport him to the desire floor.
 
-`npm test`
+# Dependencies 
 
-With a fully completed project, you should get an output like:
+To be able to try the program, you need ..
 
-![Screenshot from 2021-06-10 16-31-36](https://user-images.githubusercontent.com/28630658/121592985-5edd2600-ca09-11eb-9ff0-38215b74c67c.png)
+- to install an Integrated development environment(we used visual code for this one).
 
-All of these files can be left in your final project but no scenarios should be present in your code. The grader will run tests similar to the ones provided.
+- you also need to install the latest version of node.js.
 
-Of course, make sure to edit this Readme file to describe your own project!
+-you also need to install npm (in vusual code or your IDE).
+
+# Usage
+
+-To use the program, you need to type python -m paytest
+this should active the test so you can see the program in action.
+
+- you can also initiate a new column with a set of attrivutes set
+by you the see the program in execution(column = Column(your inputs).)
+## Example
+
+if you initiate a new column like
+columnA = Column(id, number of floors, number of elevators )
+the program will create a column with the number of floors 
+and number of elevators.
+
+if we set this values:
+Elevator A is Idle at floor 2 
+Elevator B is Idle at floor 6
+Someone is on floor 3 and wants to go to the 7th floor. 
+
+the outcome will be :
+Elevator A is expected to be sent.
