@@ -18,11 +18,11 @@ To be able to try the program, you need ..
 
 # Usage
 
--To use the program, you need to type python -m paytest
+-To use the program, you need to type npm test
 this should active the test so you can see the program in action.
 
 - you can also initiate a new column with a set of attrivutes set
-by you the see the program in execution(column = Column(your inputs).)
+by you the see the program in execution(column =  new Column(your inputs).)
 ## Example
 
 if you initiate a new column like
